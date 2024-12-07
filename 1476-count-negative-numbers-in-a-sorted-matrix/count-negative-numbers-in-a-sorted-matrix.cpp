@@ -1,17 +1,36 @@
+#include <vector>
+#include <algorithm>
+
 class Solution {
 public:
-    int countNegatives(vector<vector<int>>& grid) {
-        int count = 0, s1 = grid.size();
-
-        for (int i = 0; i<s1; i++)
-        {
-            int s2 = grid[i].size();
-            for(int j = 0; j<s2; j++)
-            {
-                if (grid[i][j] < 0) count++;
-            }
+    int binarySearchFirstNegative(const std::vector<int>& row) {
+        int left = 0;
+        int right = row.size();
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (row[mid] < 0) 
+                right = mid;  
+             else 
+                left = mid + 1;  
+            
         }
+        
+        return left;  
+    }
 
-        return count;
+    int countNegativesRecursive(const vector<vector<int>>& grid, int rowIndex) {
+        if (rowIndex == grid.size()) 
+            return 0;
+        
+        
+        int firstNegativeIndex = binarySearchFirstNegative(grid[rowIndex]);
+        int negativesInCurrentRow = grid[rowIndex].size() - firstNegativeIndex;
+        
+        return negativesInCurrentRow + countNegativesRecursive(grid, rowIndex + 1);
+    }
+
+    int countNegatives(vector<vector<int>>& grid) {
+        return countNegativesRecursive(grid, 0);
     }
 };
