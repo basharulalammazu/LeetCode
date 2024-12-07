@@ -1,9 +1,6 @@
-#include <vector>
-#include <algorithm>
-
 class Solution {
 public:
-    int binarySearchFirstNegative(const std::vector<int>& row) {
+    int binarySearchFirstNegative(const vector<int>& row) {
         int left = 0;
         int right = row.size();
         
